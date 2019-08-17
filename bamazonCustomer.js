@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
  
 connection.connect();
  
-connection.query('SELECT item_id, product_name, price FROM products', function (error, results, fields) {
+connection.query('SELECT * FROM products', function (error, results, fields) {
   if (error) throw error;
   var productsArray=[];
 
@@ -30,6 +30,7 @@ connection.query('SELECT item_id, product_name, price FROM products', function (
     {
         "name": "productList",
         "type": "rawlist",
+        "message": "Which item would you like to buy?",
         "choices": function() {
             var productNames=[];
             productsArray.forEach(function(e){
@@ -38,11 +39,37 @@ connection.query('SELECT item_id, product_name, price FROM products', function (
             return productNames;
         }
         
+    },
+    {
+        "name": "quantity",
+        "type": "number",
+        "message": "How many would you like?",
+        // "validate": function(){
+        //     return (!NaN);
+        // }
     }
   ])
   .then(answers => {
     // Use user feedback for... whatever!!
-    //console.log(answers);
+    // console.log(answers.quantity);
+    // console.log(answers.productList);
+    // console.log(productsArray.product_name);
+    productsArray.forEach(function(e){
+        if (e.product_name === answers.productList) {
+            if (e.stock_quantity > answers.quantity){
+                console.log("fulfilling your purchase");
+            } else {
+                console.log("insufficient quantity!");
+            }
+        };
+    });
+    // if (answers.quantity > productsArray[answers.productList]){
+    //     console.log("fulfilling your order");
+    // } else {
+    //     console.log("Insufficient quantity!");
+    // }
+
+
   });
 
 
