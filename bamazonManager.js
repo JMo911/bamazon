@@ -29,6 +29,7 @@ inquirer
         case "View Products for Sale":
           // code block
           console.log("you choose view products for sale");
+          viewProducts();
           break;
         case "View Low Inventory":
           // code block
@@ -48,7 +49,16 @@ inquirer
       }
 
 
+    function viewProducts(){
+        connection.query('SELECT * FROM products', function (error, results, fields) {
+            if (error) throw error;
+            //console.log(results);
+            results.forEach(element => {
+                console.log("ID: " + element.item_id+ "\nname: " +element.product_name +  "\nprice: " + element.price + "\nquantity: " + element.stocu_quantity +"\n--------------------\n");
+            });
 
+          });
+    }
 
 
 
