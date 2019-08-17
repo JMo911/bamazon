@@ -111,7 +111,7 @@ connection.query('SELECT * FROM products', function (error, results, fields) {
         };
       });
     }
-});
+});  
 
 
 
