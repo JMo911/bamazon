@@ -54,8 +54,9 @@ connection.query('SELECT * FROM products', function (error, results, fields) {
             // Use user feedback for... whatever!!
             productsArray.forEach(function(e){
                 if (e.product_name === answers.productList) {
+                    const divider = "\n------------------\n";
                     if (e.stock_quantity > answers.quantity){
-                        console.log("fulfilling your purchase");
+                        console.log("fulfilling your purchase" + divider);
                         connection.query("UPDATE products SET ? WHERE ?",
                         [
                             {
@@ -69,9 +70,8 @@ connection.query('SELECT * FROM products', function (error, results, fields) {
                             if (error) {
                                 console.log(error);
                             } else {
-                                console.log(response.changedRows + " quantity updated!");
+                                console.log(response.changedRows + " quantity updated!" + divider +  "You're account has been debited " + "$" + (e.price * answers.quantity).toFixed(2)) + divider;
                                 keepShopping();
-                                // console.log(keepShopping());
                             }
                         }
                         );
