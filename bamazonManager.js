@@ -12,6 +12,15 @@ var connection = mysql.createConnection({
  
 connection.connect();
 
+var timesRun = 0;
+
+function managementOptions() {
+  if (timesRun===0) {
+    console.log("Welcome Managers!\n\n\n");
+  }
+  timesRun++;
+
+
 inquirer
   .prompt([
     /* Pass your questions in here */
@@ -19,7 +28,7 @@ inquirer
         "type": "list",
         "choices": ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product"],
         "name": "availableOptions",
-        "message": "Welcome manager. What would you like to do?"
+        "message": "What would you like to do?"
     }
   ])
   .then(answers => {
@@ -46,21 +55,19 @@ inquirer
         //default:
           // code block
 
-      }
-
-
-    function viewProducts(){
-        connection.query('SELECT * FROM products', function (error, results, fields) {
-            if (error) throw error;
-            //console.log(results);
-            results.forEach(element => {
-                console.log("ID: " + element.item_id+ "\nname: " +element.product_name +  "\nprice: " + element.price + "\nquantity: " + element.stocu_quantity +"\n--------------------\n");
-            });
-
-          });
     }
+});
+};
+managementOptions();
 
 
-
-
+function viewProducts(){
+  connection.query('SELECT * FROM products', function (error, results, fields) {
+    if (error) throw error;
+    //console.log(results);
+    results.forEach(element => {
+      console.log("Here are your items: \n\nID: " + element.item_id+ "\nname: " +element.product_name +  "\nprice: " + element.price + "\nquantity: " + element.stock_quantity +"\n--------------------\n");
+    });
   });
+  // managementOptions();
+}
