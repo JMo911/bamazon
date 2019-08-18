@@ -108,6 +108,7 @@ connection.query('SELECT * FROM products', function (error, results, fields) {
             shopping();
         } else {
             console.log("Thank you for shopping with us. See you next time!");
+            connection.end();
         };
       });
     }
